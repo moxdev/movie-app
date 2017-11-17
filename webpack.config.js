@@ -3,6 +3,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 // Constant with our paths
 const paths = {
@@ -19,13 +20,18 @@ module.exports = {
     path: paths.DIST,
     filename: 'app.bundle.js'
   },
+  // for routing: set the path back to '/' then router routes to the correct path
+  devServer: {
+    historyApiFallback: true
+  },
   // Tell webpack to use html plugin
   // index.html is used as a template in which it'll inject bundled app.
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(paths.SRC, 'index.html')
     }),
-    new ExtractTextPlugin('style.bundle.css')
+    new ExtractTextPlugin('style.bundle.css'),
+    new DashboardPlugin()
   ],
   // Loaders configuration
   // Configure webpack to use "babel-loader" for .js and .jsx files
